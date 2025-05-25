@@ -61,6 +61,7 @@ export default class ScheduleService {
             ...params,
             command,
           })}`,
+        );
 
         try {
           const startTime = dayjs();
