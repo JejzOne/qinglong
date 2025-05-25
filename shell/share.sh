@@ -5,7 +5,7 @@ dir_root=$QL_DIR
 dir_tmp=$dir_root/.tmp
 dir_data=$dir_root/data
 
-if [[ $QL_DATA_DIR ]]; then
+if [[ ${QL_DATA_DIR:=} ]]; then
   dir_data=$QL_DATA_DIR
 fi
 
@@ -77,7 +77,7 @@ import_config() {
   command_timeout_time=${CommandTimeoutTime:-""}
   proxy_url=${ProxyUrl:-""}
   file_extensions=${RepoFileExtensions:-"js py"}
-  current_branch=${QL_BRANCH}
+  current_branch=${QL_BRANCH:-""}
 
   if [[ -n "${DefaultCronRule}" ]]; then
     default_cron="${DefaultCronRule}"
@@ -456,7 +456,7 @@ run_task_before() {
 run_task_after() {
   . $file_task_after "$@"
 
-  if [[ $task_after ]]; then
+  if [[ ${task_after:=} ]]; then
     echo -e "\n执行后置命令\n"
     eval "$task_after"
     echo -e "\n执行后置命令结束"
