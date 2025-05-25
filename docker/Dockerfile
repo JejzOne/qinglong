@@ -49,6 +49,7 @@ RUN set -x \
   procps \
   netcat-openbsd \
   unzip \
+  cron \
   libatomic1 \
   && apt-get clean \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
