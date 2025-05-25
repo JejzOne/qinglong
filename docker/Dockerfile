@@ -50,7 +50,6 @@ RUN set -x \
   netcat-openbsd \
   unzip \
   libatomic1 \
-  cron \
   && apt-get clean \
   && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && echo "Asia/Shanghai" > /etc/timezone \
