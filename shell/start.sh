@@ -27,6 +27,11 @@ if [[ ! $QL_DATA_DIR ]]; then
   exit 1
 fi
 
+if [[ $QL_DATA_DIR != */data ]]; then
+  echo -e "QL_DATA_DIR 必须以 /data 结尾，例如 /ql/data，如果有历史数据，请新建 data 目录，把历史数据放到 data 目录中"
+  exit 1
+fi
+
 # 安装依赖
 os_name=$(source /etc/os-release && echo "$ID")
 
@@ -47,7 +52,7 @@ if [[ $os_name == 'alpine' ]]; then
     netcat-openbsd
 elif [[ $os_name == 'debian' ]] || [[ $os_name == 'ubuntu' ]]; then
   apt update
-  apt install -y git curl wget tzdata perl openssl jq nginx procps netcat openssh-client
+  apt install -y git curl wget tzdata perl openssl jq nginx procps netcat-openbsd openssh-client
 elif [[ $os_name == 'centos' ]]; then
   yum update
   yum install -y epel-release git curl wget tzdata perl openssl jq nginx procps netcat openssh-client
@@ -67,6 +72,15 @@ chmod 777 ${QL_DIR}/shell/*.sh
 . ${QL_DIR}/shell/env.sh
 . ${QL_DIR}/shell/share.sh
 
+log_with_style() {
+  local level="$1"
+  local message="$2"
+  local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+  printf "\n[%s] [%7s]  %s\n" "${timestamp}" "${level}" "${message}"
+}
+
+log_with_style "INFO" "🚀 1. 检测配置文件..."
 make_dir /etc/nginx/conf.d
 make_dir /run/nginx
 init_nginx
@@ -85,14 +99,20 @@ if [[ "$is_equal_registry" == "" ]]; then
   pnpm install -g
 fi
 
-reload_pm2
-
+log_with_style "INFO" "🔄 2. 启动 nginx..."
 nginx -s reload 2>/dev/null || nginx -c /etc/nginx/nginx.conf
 
+log_with_style "INFO" "⚙️  3. 启动 pm2 服务..."
+reload_pm2
+
 if [[ $AutoStartBot == true ]]; then
-  nohup ql -l bot >$dir_log/bot.log 2>&1 &
+  log_with_style "INFO" "🤖 4. 启动 bot..."
+  nohup ql bot >$dir_log/bot.log 2>&1 &
 fi
 
 if [[ $EnableExtraShell == true ]]; then
-  nohup ql -l extra >$dir_log/extra.log 2>&1 &
+  log_with_style "INFO" "🛠️ 5. 执行自定义脚本..."
+  nohup ql extra >$dir_log/extra.log 2>&1 &
 fi
+
+log_with_style "SUCCESS" "🎉 启动成功!"
