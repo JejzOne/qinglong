@@ -71,7 +71,10 @@ export default (app: Router) => {
         if (config.blackFileList.includes(name)) {
           res.send({ code: 403, message: '文件无法访问' });
         }
-        const path = join(config.configPath, name);
+        let path = join(config.configPath, name);
+        if (name.startsWith('data/scripts/')) {
+          path = join(config.rootPath, name);
+        }
         fs.writeFileSync(path, content);
         res.send({ code: 200, message: '保存成功' });
       } catch (e) {
