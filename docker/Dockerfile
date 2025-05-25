@@ -1,6 +1,6 @@
-FROM node:22-slim as nodebuilder
+FROM node:20-slim as nodebuilder
 
-FROM python:3.10-slim-bullseye as builder
+FROM python:3.10-slim-bookworm as builder
 COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
 COPY --from=nodebuilder /usr/local/bin/node /usr/local/bin/
 COPY --from=nodebuilder /usr/local/lib/node_modules/. /usr/local/lib/node_modules/
@@ -12,7 +12,7 @@ RUN set -x && \
   cd /tmp/build && \
   pnpm --registry https://registry.npmmirror.com install --prod
 
-FROM python:3.10-slim-bullseye
+FROM python:3.10-slim-bookworm
 
 ARG QL_MAINTAINER="Jejz168"
 LABEL maintainer="${QL_MAINTAINER}"
@@ -45,7 +45,7 @@ RUN set -x && \
   nginx \
   jq \
   procps \
-  netcat \
+  netcat-openbsd \
   libatomic1 && \
   apt clean && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
