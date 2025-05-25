@@ -78,7 +78,8 @@ const Crontab = () => {
           style={{
             wordBreak: 'break-all',
             marginBottom: 0,
-            color: '#1890ff'
+            color: '#1890ff',
+            cursor: 'pointer',
           }}
           ellipsis={{ tooltip: text, rows: 2 }}
         >
@@ -275,7 +276,9 @@ const Crontab = () => {
         record.sub_id ? (
           <Name
             service={() =>
-              request.get(`${config.apiPrefix}subscriptions/${record.sub_id}`)
+              request.get(`${config.apiPrefix}subscriptions/${record.sub_id}`, {
+                onError: noop,
+              })
             }
             options={{ ready: record?.sub_id, cacheKey: record.sub_id }}
           />
