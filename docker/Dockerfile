@@ -1,4 +1,4 @@
-FROM node:20-slim as nodebuilder
+FROM node:22-slim as nodebuilder
 
 FROM python:3.10-slim-bookworm as builder
 COPY package.json .npmrc pnpm-lock.yaml /tmp/build/
@@ -46,6 +46,7 @@ RUN set -x && \
   jq \
   procps \
   netcat-openbsd \
+  unzip \
   libatomic1 && \
   apt clean && \
   ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
