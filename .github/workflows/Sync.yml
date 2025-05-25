@@ -17,15 +17,13 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git clone https://github.com/whyour/qinglong.git
+          git clone https://github.com/sfdafaa/qinglong
           cd qinglong
           git checkout debian
-          git log --grep="2.16.5"
-          git checkout 66a2769e7c99650c38f51e3021ff053900f1f46c
-          git checkout -b backup
+          git checkout -b backup1
       
       - name: Push to your repo
         run: |
           cd qinglong
           git remote add target https://x-access-token:${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
-          git push target backup --force
+          git push target backup1 --force
