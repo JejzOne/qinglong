@@ -115,7 +115,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          tags: jejz/ql:debian-python3.10
+          tags: jejz/qinglong:debian-python3.10
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
