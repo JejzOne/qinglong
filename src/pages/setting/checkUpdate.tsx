@@ -166,7 +166,6 @@ const CheckUpdate = ({ systemInfo }: any) => {
     Modal.confirm({
       width: 600,
       maskClosable: false,
-      closable: true,
       title: intl.get('确认重启'),
       centered: true,
       content: intl.get('系统即将重启…'),
