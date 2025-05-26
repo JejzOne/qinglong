@@ -10,7 +10,6 @@ import Container from 'typedi';
 import OpenService from '../services/open';
 import rewrite from 'express-urlrewrite';
 import UserService from '../services/user';
-import * as Sentry from '@sentry/node';
 import { EnvModel } from '../data/env';
 import { errors } from 'celebrate';
 import { createProxyMiddleware } from 'http-proxy-middleware';
@@ -179,8 +178,6 @@ export default ({ app }: { app: Application }) => {
       res: Response,
       next: NextFunction,
     ) => {
-      Sentry.captureException(err);
-
       res.status(err.status || 500);
       res.json({
         code: err.status || 500,
