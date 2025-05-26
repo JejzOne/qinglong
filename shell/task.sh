@@ -50,6 +50,7 @@ handle_log_path() {
     fi
   fi
 
+  mtime_format="%Y-%m-%d-%H-%M-%S"
   time=$(date "+$mtime_format")
   log_time=$(format_log_time "$mtime_format" "$time")
   log_dir_tmp="${file_param##*/}"
