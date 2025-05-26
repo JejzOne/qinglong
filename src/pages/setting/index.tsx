@@ -123,6 +123,7 @@ const Setting = () => {
   const [editedApp, setEditedApp] = useState<any>();
   const [tabActiveKey, setTabActiveKey] = useState('security');
   const [loginLogData, setLoginLogData] = useState<any[]>([]);
+  const [systemLogData, setSystemLogData] = useState<string>('');
   const [notificationInfo, setNotificationInfo] = useState<any>();
   const containergRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number>(0);
