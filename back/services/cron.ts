@@ -524,11 +524,15 @@ export default class CronService {
     }
     let commandVariable = `no_tee=true ID=${tab.id} `
     if (tab.task_before) {
-      commandVariable += `task_before='${tab.task_before.replace(/'/g, "'\\''")
+      commandVariable += `task_before='${tab.task_before
+        .replace(/'/g, "'\\''")
+        .replace(/;? *\n/g, ';')
         .trim()}' `;
     }
     if (tab.task_after) {
-      commandVariable += `task_after='${tab.task_after.replace(/'/g, "'\\''")
+      commandVariable += `task_after='${tab.task_after
+        .replace(/'/g, "'\\''")
+        .replace(/;? *\n/g, ';')
         .trim()}' `;
     }
 
