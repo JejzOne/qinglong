@@ -83,4 +83,6 @@ HEALTHCHECK --interval=5s --timeout=2s --retries=20 \
 
 ENTRYPOINT ["./docker/docker-entrypoint.sh"]
 
+VOLUME /ql/data
+
 EXPOSE 5700
