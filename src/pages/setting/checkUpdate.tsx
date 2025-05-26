@@ -168,7 +168,7 @@ const CheckUpdate = ({ systemInfo }: any) => {
       maskClosable: false,
       title: intl.get('确认重启'),
       centered: true,
-      content: intl.get('系统即将重启…'),
+      content: intl.get('系统即将重启'),
       okText: intl.get('重启'),
       onOk() {
         reloadSystem();
