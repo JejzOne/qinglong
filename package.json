@@ -143,7 +143,7 @@
     "@types/uuid": "^8.3.4",
     "@uiw/codemirror-extensions-langs": "^4.21.9",
     "@uiw/react-codemirror": "^4.21.9",
-    "@umijs/max": "^4.4.11",
+    "@umijs/max": "^4.0.72",
     "@umijs/ssr-darkreader": "^4.9.45",
     "ahooks": "^3.7.8",
     "ansi-to-react": "^6.1.6",
