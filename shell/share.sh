@@ -348,8 +348,7 @@ format_log_time() {
   if [[ $is_macos -eq 1 ]]; then
     echo $(python3 -c 'from datetime import datetime; print(datetime.now().strftime("%Y-%m-%d-%H-%M-%S-%f")[:-3])')
   else
-    local ms=$(date +%N | cut -c1-3)
-    echo "${time}-${ms}"
+    echo $(date -d "$time" "+%Y-%m-%d-%H-%M-%S-%3N")
   fi
 }
 
