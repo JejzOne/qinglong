@@ -39,7 +39,15 @@ export default defineConfig({
       }),
     );
   }) as any,
-  headScripts: [`./api/env.js`],
+  externals: {
+    react: 'window.React',
+    'react-dom': 'window.ReactDOM',
+  },
+  headScripts: [
+    `./api/env.js`,
+    './react.production.min.js',
+    './react-dom.production.min.js',
+  ],
   copy: [
     {
       from: 'node_modules/monaco-editor/min/vs',
