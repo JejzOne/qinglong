@@ -32,8 +32,8 @@ jobs:
           mkdir -p tmp
           cd ./tmp
           cat ../static/dist/index.html
-          #wget -qO ../static/dist/favicon.svg "https://qn.whyour.cn/favicon.svg"
-          #wget -qO ../static/dist/iconfont.js "https://at.alicdn.com/t/c/font_3354854_lc939gab1iq.js"
+          wget -qO ../static/dist/favicon.svg "https://qn.whyour.cn/favicon.svg"
+          wget -qO ../static/dist/iconfont.js "https://at.alicdn.com/t/c/font_3354854_lc939gab1iq.js"
           #wget -qO ../static/dist/react.production.min.js "https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js"
           #wget -qO ../static/dist/react-dom.production.min.js "https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js"
           #sed -i 's~https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js~./react.production.min.js~' ../static/dist/index.html
