@@ -31,11 +31,11 @@ jobs:
         run: |
           mkdir -p tmp
           cd ./tmp
+           wget -qO ../static/dist/react.production.min.js "https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js"
+          wget -qO ../static/dist/react-dom.production.min.js "https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js"
+          sed -i 's~https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js~./dist/react.production.min.js~' ../static/dist/index.html
+          sed -i 's~https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js~./dist/react-dom.production.min.js~' ../static/dist/index.html
           cp -rf ../static/* ./
-          wget -qO static/dist/react.production.min.js "https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js"
-          wget -qO static/dist/react-dom.production.min.js "https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js"
-          sed -i 's~https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js~./dist/react.production.min.js~' ./static/dist/index.html
-          sed -i 's~https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js~./dist/react-dom.production.min.js~' ./static/dist/index.html
           git init -b ${GITHUB_BRANCH} && git add .
           git config --local user.name 'github-actions[bot]'
           git config --local user.email 'github-actions[bot]@users.noreply.github.com'
