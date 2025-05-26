@@ -45,5 +45,6 @@ export default defineConfig({
       to: 'static/dist/monaco-editor/min/vs',
     },
   ],
+  scripts: [],
   npmClient: 'pnpm',
 });
