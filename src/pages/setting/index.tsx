@@ -74,11 +74,19 @@ const Setting = () => {
       title: intl.get('权限'),
       dataIndex: 'scopes',
       key: 'scopes',
-      width: '40%',
+      width: 500,
       render: (text: string, record: any) => {
-        return record.scopes.map((scope: any) => {
-          return <Tag key={scope}>{(config.scopesMap as any)[scope]}</Tag>;
-        });
+        return (
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+            {record.scopes.map((scope: any) => {
+              return (
+                <Tag style={{ marginRight: 0 }} key={scope}>
+                  {(config.scopesMap as any)[scope]}
+                </Tag>
+              );
+            })}
+          </div>
+        );
       },
     },
     {
@@ -333,7 +341,9 @@ const Setting = () => {
             {
               key: 'syslog',
               label: intl.get('系统日志'),
-              children: <SystemLog height={height} theme={theme} />,
+              children: (
+                <SystemLog data={systemLogData} height={height} theme={theme} />
+              ),
             },
             {
               key: 'login',
@@ -344,10 +354,7 @@ const Setting = () => {
               key: 'other',
               label: intl.get('其他设置'),
               children: (
-                <Other
-                  reloadTheme={reloadTheme}
-                  systemInfo={systemInfo}
-                />
+                <Other reloadTheme={reloadTheme} systemInfo={systemInfo} />
               ),
             },
             {
