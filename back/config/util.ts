@@ -330,6 +330,17 @@ export function readDir(
   return result;
 }
 
+export async function rmPath(path: string) {
+  try {
+    const _exsit = await fileExist(path);
+    if (_exsit) {
+      await fs.rm(path, { force: true, recursive: true, maxRetries: 5 });
+    }
+  } catch (error) {
+    Logger.error('[rmPath失败]', error);
+  }
+}
+
 export async function emptyDir(path: string) {
   const pathExist = await fileExist(path);
   if (!pathExist) {
