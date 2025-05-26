@@ -334,7 +334,7 @@ export async function rmPath(path: string) {
   try {
     const _exsit = await fileExist(path);
     if (_exsit) {
-      await fs.rm(path, { force: true, recursive: true, maxRetries: 5 });
+      fs.rmSync(path, { recursive: true, force: true });
     }
   } catch (error) {
     Logger.error('[rmPath失败]', error);
