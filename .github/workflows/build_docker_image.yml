@@ -123,8 +123,6 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            #jejz/ql:debian-python3.10
-            #jejz/ql:latest
             jejz/ql:cs
       
       - name: Image digest
