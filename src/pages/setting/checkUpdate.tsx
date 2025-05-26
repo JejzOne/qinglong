@@ -168,7 +168,7 @@ const CheckUpdate = ({ systemInfo }: any) => {
       maskClosable: false,
       title: intl.get('确认重启'),
       centered: true,
-      content: intl.get('系统即将重启！'),
+      content: intl.get('系统安装包下载成功，确认重启'),
       okText: intl.get('重启'),
       onOk() {
         reloadSystem();
@@ -239,7 +239,7 @@ const CheckUpdate = ({ systemInfo }: any) => {
       <Button type="primary" onClick={checkUpgrade}>
         {intl.get('检查更新')}
       </Button>
-      <Button type="primary" onClick={RestartReloadModal}>
+      <Button type="primary" onClick={RestartReloadModal} style={{ marginLeft: 8 }}>
         {intl.get('重新启动')}
       </Button>
     </>
