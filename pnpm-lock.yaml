@@ -129,9 +129,6 @@ devDependencies:
   '@ant-design/icons':
     specifier: ^5.0.1
     version: 5.2.6(react-dom@18.3.1)(react@18.3.1)
-  '@ant-design/icons-svg':
-    specifier: ^4.4.2
-    version: 4.4.2
   '@ant-design/pro-layout':
     specifier: 6.38.22
     version: 6.38.22(prop-types@15.8.1)(react-dom@18.3.1)(react@18.3.1)
