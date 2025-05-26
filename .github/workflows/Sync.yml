@@ -1,0 +1,31 @@
+name: Sync qinglong debian 2.16.5
+
+on:
+  workflow_dispatch:  # 可以手动触发
+  #schedule:
+   # - cron: '0 0 * * *'  # 每天 UTC 0 点同步一次
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+
+      - name: Clone source repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          git clone --depth 1 --branch debian https://github.com/Jejz168/qinglong
+          cd qinglong
+          git checkout debian
+          git log --grep="2.16.5"
+          git checkout bbfa4b5238120f14ef37e92b07ae93548ddc7584
+          git checkout -b backup
+      
+      - name: Push to your repo
+        run: |
+          cd qinglong
+          git remote add target https://x-access-token:${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
+          git push target backup --force
