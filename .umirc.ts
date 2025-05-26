@@ -13,7 +13,6 @@ export default defineConfig({
   },
   outputPath: 'static/dist',
   fastRefresh: true,
-  routePreloadOnLoad: false,
   favicons: [`./favicon.svg`],
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   proxy: {
