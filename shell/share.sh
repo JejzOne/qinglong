@@ -489,5 +489,3 @@ init_env
 detect_termux
 detect_macos
 define_cmd
-
-import_config $1
