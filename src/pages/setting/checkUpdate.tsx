@@ -218,11 +218,7 @@ const CheckUpdate = ({ systemInfo }: any) => {
       <Button type="primary" onClick={checkUpgrade}>
         {intl.get('检查更新')}
       </Button>
-      <Button
-        type="primary"
-        onClick={() => reloadSystem()}
-        style={{ marginLeft: 8 }}
-      >
+      <Button type="primary" onClick={reloadSystem} style={{ marginLeft: 8 }}>
         {intl.get('重新启动')}
       </Button>
     </>
