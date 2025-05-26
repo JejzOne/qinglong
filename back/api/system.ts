@@ -129,7 +129,7 @@ export default (app: Router) => {
     '/reload',
     celebrate({
       body: Joi.object({
-        type: Joi.string().required(),
+        type: Joi.string().optional().allow('').allow(null),
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
