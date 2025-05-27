@@ -162,6 +162,19 @@ const CheckUpdate = ({ systemInfo }: any) => {
     });
   };
 
+  const RestartReloadModal = () => {
+    Modal.confirm({
+      width: 300,
+      title: intl.get('确认重启'),
+      centered: true,
+      okText: intl.get('重启'),
+      cancelText: intl.get('以后再说'),
+      onOk() {
+        reloadSystem();
+      },
+    });
+  };
+
   useEffect(() => {
     if (!value) return;
     const updateFailed = value.includes('失败，请检查');
@@ -218,7 +231,7 @@ const CheckUpdate = ({ systemInfo }: any) => {
       <Button type="primary" onClick={checkUpgrade}>
         {intl.get('检查更新')}
       </Button>
-      <Button type="primary" onClick={() => reloadSystem()} style={{ marginLeft: 8 }}>
+      <Button type="primary" onClick={RestartReloadModal} style={{ marginLeft: 8 }}>
         {intl.get('重新启动')}
       </Button>
     </>
