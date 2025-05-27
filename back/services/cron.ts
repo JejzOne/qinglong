@@ -421,7 +421,7 @@ export default class CronService {
         }
 
         this.logger.info(
-          `[panel][开始执行任务] 参数 ${JSON.stringify(params)}`,
+          `[panel][开始执行任务] 参数: ${JSON.stringify(params)}`,
         );
 
         let { id, command, log_path } = cron;
@@ -452,10 +452,20 @@ export default class CronService {
           await fs.appendFile(absolutePath, data.toString());
         });
         cp.on('error', async (err) => {
+          this.logger.error(
+            '[panel][创建任务失败] 命令: %s, 错误信息: %j',
+            command,
+            err,
+          );
           await fs.appendFile(absolutePath, JSON.stringify(err));
         });
 
         cp.on('exit', async (code) => {
+          this.logger.info(
+            '[panel][执行任务结束] 参数: %s, 退出码: %j',
+            JSON.stringify(params),
+            code,
+          );
           await CrontabModel.update(
             { status: CrontabStatus.idle, pid: undefined },
             { where: { id } },
