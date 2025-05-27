@@ -4,7 +4,7 @@ import chokidar from 'chokidar';
 import config from '../config/index';
 import { promiseExec } from '../config/util';
 
-function linkToNodeModule(src: string, dst?: string) {
+async function linkToNodeModule(src: string, dst?: string) {
   const target = path.join(config.rootPath, 'node_modules', dst || src);
   const source = path.join(config.rootPath, src);
 
