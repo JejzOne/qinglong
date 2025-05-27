@@ -1,5 +1,4 @@
 import expressLoader from './express';
-import expressLoader from './express';
 import depInjectorLoader from './depInjector';
 import Logger from './logger';
 import initData from './initData';
