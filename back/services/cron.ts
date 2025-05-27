@@ -395,7 +395,7 @@ export default class CronService {
   }
 
   private async runSingle(cronId: number): Promise<number | void> {
-    return taskLimit.runWithCronLimit(() => {
+    return taskLimit.manualRunWithCronLimit(() => {
       return new Promise(async (resolve: any) => {
         const cron = await this.getDb({ id: cronId });
         const params = { name: cron.name, command: cron.command, schedule: cron.schedule, extraSchedules: cron.extra_schedules };
@@ -429,13 +429,16 @@ export default class CronService {
           { status: CrontabStatus.running, pid: cp.pid, log_path: logPath },
           { where: { id } },
         );
+        cp.stdout.on('data', async (data) => {
+          fs.appendFileSync(absolutePath, data.toString());
+        });
         cp.stderr.on('data', (data) => {
           this.logger.info(
             '[panel][执行任务失败] 命令: %s, 错误信息: %j',
             command,
             data.toString(),
           );
-          fs.appendFileSync(`${absolutePath}`, `${data.toString()}`);
+          fs.appendFileSync(absolutePath, data.toString());
         });
         cp.on('error', (err) => {
           this.logger.error(
@@ -443,7 +446,7 @@ export default class CronService {
             command,
             err,
           );
-          fs.appendFileSync(`${absolutePath}`, `${JSON.stringify(err)}`);
+          fs.appendFileSync(absolutePath, JSON.stringify(err));
         });
 
         cp.on('exit', async (code) => {
