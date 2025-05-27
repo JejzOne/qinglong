@@ -123,7 +123,8 @@ jobs:
           file: ./docker/Dockerfile
           push: true
           tags: |
-            jejz/ql:cs
+            jejz/ql:debian-python3.10
+            jejz/ql:latest
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
