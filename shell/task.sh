@@ -113,7 +113,6 @@ init_begin_time() {
   begin_timestamp=$(format_timestamp "$time_format" "$time")
 }
 
-import_config "$@"
 while getopts ":lm:" opt; do
   case $opt in
   l)
