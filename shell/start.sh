@@ -63,7 +63,7 @@ fi
 
 npm install -g pnpm@8.3.1
 cd && pnpm config set registry https://registry.npmmirror.com
-pnpm add -g pm2 tsx
+pnpm add -g pm2 ts-node
 
 cd ${QL_DIR}
 cp -f .env.example .env
@@ -81,6 +81,7 @@ log_with_style() {
 }
 
 log_with_style "INFO" "🚀 1. 检测配置文件..."
+import_config "$@"
 make_dir /etc/nginx/conf.d
 make_dir /run/nginx
 init_nginx
