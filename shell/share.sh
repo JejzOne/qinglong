@@ -5,7 +5,7 @@ dir_root=$QL_DIR
 dir_tmp=$dir_root/.tmp
 dir_data=$dir_root/data
 
-if [[ $QL_DATA_DIR ]]; then
+if [[ ${QL_DATA_DIR:=} ]]; then
   dir_data=$QL_DATA_DIR
 fi
 
@@ -81,7 +81,7 @@ import_config() {
   command_timeout_time=${CommandTimeoutTime:-""}
   file_extensions=${RepoFileExtensions:-"js py"}
   proxy_url=${ProxyUrl:-""}
-  current_branch=${QL_BRANCH}
+  current_branch=${QL_BRANCH:-""}
 
   if [[ -n "${DefaultCronRule}" ]]; then
     default_cron="${DefaultCronRule}"
@@ -434,14 +434,20 @@ init_nginx() {
 }
 
 handle_task_start() {
-  [[ $ID ]] && update_cron "\"$ID\"" "0" "$$" "$log_path" "$begin_timestamp"
-  echo -e "## 开始执行... $begin_time\n"
+  local error_message=""
+  if [[ $ID ]]; then
+    local error=$(update_cron "\"$ID\"" "0" "$$" "$log_path" "$begin_timestamp")
+    if [[ $error ]]; then
+      error_message=", 任务状态更新失败(${error})"
+    fi
+  fi
+  echo -e "## 开始执行... ${begin_time}${error_message}\n"
 }
 
 run_task_before() {
   . $file_task_before "$@"
 
-  if [[ $task_before ]]; then
+  if [[ ${task_before:=} ]]; then
     echo -e "执行前置命令\n"
     eval "$task_before"
     echo -e "\n执行前置命令结束\n"
@@ -451,7 +457,7 @@ run_task_before() {
 run_task_after() {
   . $file_task_after "$@"
 
-  if [[ $task_after ]]; then
+  if [[ ${task_after:=} ]]; then
     echo -e "\n执行后置命令\n"
     eval "$task_after"
     echo -e "\n执行后置命令结束"
@@ -463,11 +469,19 @@ handle_task_end() {
   local end_time=$(format_time "$time_format" "$etime")
   local end_timestamp=$(format_timestamp "$time_format" "$etime")
   local diff_time=$(($end_timestamp - $begin_timestamp))
+  local suffix=""
+  [[ "${MANUAL:=}" == "true" ]] && suffix="(手动停止)"
 
   [[ "$diff_time" == 0 ]] && diff_time=1
 
-  echo -e "\n## 执行结束... $end_time  耗时 $diff_time 秒　　　　　"
-  [[ $ID ]] && update_cron "\"$ID\"" "1" "" "$log_path" "$begin_timestamp" "$diff_time"
+  if [[ $ID ]]; then
+    local error=$(update_cron "\"$ID\"" "1" "$$" "$log_path" "$begin_timestamp" "$diff_time")
+    if [[ $error ]]; then
+      error_message=", 任务状态更新失败(${error})"
+    fi
+  fi
+
+  echo -e "\n## 执行结束$suffix... $end_time  耗时 $diff_time 秒${error_message:=}　　　　　"
 }
 
 init_env
