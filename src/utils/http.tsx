@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal'
-import { message } from 'antd';
+import { message, notification } from 'antd';
 import config from './config';
 import { history } from '@umijs/max';
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
@@ -8,7 +8,7 @@ interface IResponseData {
   code?: number;
   data?: any;
   message?: string;
-  error?: any;
+  errors?: any[];
 }
 
 type Override<
@@ -26,7 +26,7 @@ const time = Date.now();
 const errorHandler = function (error: AxiosError) {
   if (error.response) {
     const msg = error.response.data
-      ? error.response.data.message || error.message || error.response.data
+      ? error.response.data.message || error.message
       : error.response.statusText;
     const responseStatus = error.response.status;
     if ([502, 504].includes(responseStatus)) {
@@ -38,9 +38,17 @@ const errorHandler = function (error: AxiosError) {
         history.push('/login');
       }
     } else {
-      message.error({
-        content: msg,
-        style: { maxWidth: 500, margin: '0 auto' },
+      notification.error({
+        message: msg,
+        description: (
+          <>
+            {error.response?.data?.errors?.map((item: any) => (
+              <div>
+                {item.message} ({item.value})
+              </div>
+            ))}
+          </>
+        ),
       });
     }
   } else {
@@ -88,9 +96,15 @@ _request.interceptors.response.use(async (response) => {
       if (res.code !== 200) {
         const msg = res.message || res.data;
         msg &&
-          message.error({
-            content: msg,
-            style: { maxWidth: 500, margin: '0 auto' },
+          notification.error({
+            message: msg,
+            description: (
+              <>
+                {res?.errors.map((item: any) => (
+                  <div>{item.message}</div>
+                ))}
+              </>
+            ),
           });
       }
       return res;
