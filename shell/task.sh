@@ -38,7 +38,7 @@ handle_log_path() {
     file_param="task"
   fi
 
-  if [[ -z $ID ]]; then
+  if [[ -z ${ID:=} ]]; then
     ID=$(cat $list_crontab_user | grep -E "$cmd_task.* $file_param" | perl -pe "s|.*ID=(.*) $cmd_task.* $file_param\.*|\1|" | head -1 | awk -F " " '{print $1}')
   fi
   local suffix=""
@@ -66,17 +66,17 @@ handle_log_path() {
   log_dir="${log_dir_tmp%.*}${suffix}"
   log_path="$log_dir/$log_time.log"
 
-  if [[ $real_log_path ]]; then
+  if [[ ${real_log_path:=} ]]; then
     log_path="$real_log_path"
   fi
 
   cmd="2>&1 | tee -a $dir_log/$log_path"
   make_dir "$dir_log/$log_dir"
-  if [[ "$no_tee" == "true" ]]; then
+  if [[ "${no_tee:=}" == "true" ]]; then
     cmd=">> $dir_log/$log_path 2>&1"
   fi
 
-  if [[ "$real_time" == "true" ]]; then
+  if [[ "${real_time:=}" == "true" ]]; then
     cmd=""
   fi
 }
@@ -128,8 +128,8 @@ while getopts ":lm:" opt; do
     ;;
   esac
 done
-[[ $show_log ]] && shift $(($OPTIND - 1))
-if [[ $max_time ]]; then
+[[ ${show_log:=} ]] && shift $(($OPTIND - 1))
+if [[ ${max_time:=} ]]; then
   shift $(($OPTIND - 1))
   command_timeout_time="$max_time"
 fi
