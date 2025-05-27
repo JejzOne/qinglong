@@ -417,8 +417,13 @@ export default class CronService {
         }
         const logPath = `${uniqPath}/${logTime}.log`;
         const absolutePath = path.resolve(config.logPath, `${logPath}`);
-
-        const cp = spawn(`real_log_path=${logPath} no_delay=true ${this.makeCommand(cron)}`, { shell: '/bin/bash' });
+        const cp = spawn(
+          `real_log_path=${logPath} no_delay=true ${this.makeCommand(
+            cron,
+            true,
+          )}`,
+          { shell: '/bin/bash' },
+        );
 
         await CrontabModel.update(
           { status: CrontabStatus.running, pid: cp.pid, log_path: logPath },
@@ -517,12 +522,14 @@ export default class CronService {
     }
   }
 
-  private makeCommand(tab: Crontab) {
+  private makeCommand(tab: Crontab, realTime?: boolean) {
     let command = tab.command.trim();
     if (!command.startsWith(TASK_PREFIX) && !command.startsWith(QL_PREFIX)) {
       command = `${TASK_PREFIX}${tab.command}`;
     }
-    let commandVariable = `no_tee=true ID=${tab.id} `
+    let commandVariable = `real_time=${Boolean(realTime)} no_tee=true ID=${
+      tab.id
+    } `;
     if (tab.task_before) {
       commandVariable += `task_before='${tab.task_before
         .replace(/'/g, "'\\''")
