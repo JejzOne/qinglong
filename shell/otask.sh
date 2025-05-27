@@ -193,6 +193,17 @@ run_else() {
   $timeoutCmd $which_program $file_param "$@"
 }
 
+check_nounset() {
+  local output=$(set -o)
+  while read -r line; do
+    if [[ "$line" =~ "nounset" ]] && [[ "$line" =~ "on" ]]; then
+      set_u_on="true"
+      set +u
+      break
+    fi
+  done <<<"$output"
+}
+
 ## 命令检测
 main() {
   if [[ $1 == *.js ]] || [[ $1 == *.py ]] || [[ $1 == *.pyc ]] || [[ $1 == *.sh ]] || [[ $1 == *.ts ]]; then
@@ -227,6 +238,8 @@ main() {
 
 handle_task_start "${task_shell_params[@]}"
 run_task_before "${task_shell_params[@]}"
+set_u_on="false"
+check_nounset
 main "${task_shell_params[@]}"
 run_task_after "${task_shell_params[@]}"
 handle_task_end "${task_shell_params[@]}"
