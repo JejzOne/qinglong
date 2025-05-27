@@ -9,9 +9,6 @@
 }
 
 body {
-  // 禁止手机页面下拉刷新
-  overflow: hidden;
-
   // 禁止手机页面弹簧效果
   position: fixed;
   top: 0;
@@ -461,4 +458,10 @@ body[data-dark='true'] {
   .ant-popover-arrow-content {
     --antd-arrow-background-color: rgb(24, 26, 27);
   }
+}
+
+
+.ant-tabs-content-holder {
+  flex: 1;
+  overflow-y: auto;
 }
