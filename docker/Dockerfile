@@ -17,7 +17,7 @@ FROM python:3.10-slim-bookworm
 ARG QL_MAINTAINER="Jejz168"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
-ARG QL_BRANCH=debian
+ARG QL_BRANCH=debian-1
 
 ENV PNPM_HOME=/root/.local/share/pnpm
 
