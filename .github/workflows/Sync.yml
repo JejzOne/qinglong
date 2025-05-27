@@ -17,13 +17,13 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git clone https://github.com/darkswords/qinglong
+          git clone https://github.com/deepat163/qinglong
           cd qinglong
           git checkout debian
-          git checkout -b debian-2.17.1
+          git checkout -b debian-2.17
       
       - name: Push to your repo
         run: |
           cd qinglong
           git remote add target https://x-access-token:${{ secrets.API_TOKEN }}@github.com/${{ github.repository }}.git
-          git push target debian-2.17.1 --force
+          git push target debian-2.17 --force
