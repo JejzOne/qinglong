@@ -6,7 +6,6 @@ dir_shell=/ql/shell
 link_shell
 
 echo -e "======================1. 检测配置文件========================\n"
-import_config "$@"
 make_dir /etc/nginx/conf.d
 make_dir /run/nginx
 init_nginx
