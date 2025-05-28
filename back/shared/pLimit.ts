@@ -37,12 +37,12 @@ class TaskLimit {
     })
     this.cronLimit.on('completed', (param) => {
       Logger.info(
-        `[schedule][任务处理成功] 参数 ${JSON.stringify(param)}`,
+        `[schedule][任务处理成功] 参数: ${JSON.stringify(param)}`,
       );
     });
     this.cronLimit.on('error', error => {
       Logger.error(
-        `[schedule][任务处理错误] 参数 ${JSON.stringify(error)}`,
+        `[schedule][任务处理错误] 参数: ${JSON.stringify(error)}`,
       );
     });
     this.cronLimit.on('next', () => {
