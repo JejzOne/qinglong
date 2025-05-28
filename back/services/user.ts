@@ -4,7 +4,6 @@ import {
   createFile,
   createRandomString,
   fileExist,
-  getNetIp,
   getPlatform,
   safeJSONParse,
 } from '../config/util';
@@ -321,7 +320,16 @@ export default class UserService {
     if (isValid) {
       return this.login({ username, password }, req, false);
     } else {
-      const { ip, address } = await getNetIp(req);
+      const ip = requestIp.getClientIp(req) || '';
+      const query = new IP2Region();
+      const ipAddress = query.search(ip);
+      let address = '';
+      if (ipAddress) {
+        const { country, province, city, isp } = ipAddress;
+        address = uniq([country, province, city, isp])
+          .filter(Boolean)
+          .join(' ');
+      }
       this.updateAuthInfo(authInfo, {
         lastip: ip,
         lastaddr: address,
