@@ -241,5 +241,8 @@ run_task_before "${task_shell_params[@]}"
 set_u_on="false"
 check_nounset
 main "${task_shell_params[@]}"
+if [[ "$set_u_on" == 'true' ]]; then
+  set -u
+fi
 run_task_after "${task_shell_params[@]}"
 handle_task_end "${task_shell_params[@]}"
