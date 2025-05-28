@@ -858,6 +858,10 @@ const Crontab = () => {
         icon: <SettingOutlined />,
       },
     ],
+    style: {
+      maxHeight: 350,
+      overflowY: 'auto',
+    },
   };
 
   const getCronViews = () => {
