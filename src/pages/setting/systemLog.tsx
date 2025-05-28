@@ -83,7 +83,7 @@ const SystemLog = ({ height, theme }: any) => {
             deleteLog();
           }}
         >
-          {intl.get('清空日志')}
+          清空日志
         </Button>
       </div>
       {systemLogData ? (
