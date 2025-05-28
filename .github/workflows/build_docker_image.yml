@@ -32,6 +32,8 @@ jobs:
           mkdir -p tmp
           cd ./tmp
           cat ../static/dist/index.html
+          mkdir -p ../static/dist/umd
+          mkdir -p ../static/dist/icon
           wget -qO ../static/dist/favicon.svg "https://qn.whyour.cn/favicon.svg"
           wget -qO ../static/dist/icon/iconfont.js "https://at.alicdn.com/t/c/font_3354854_lc939gab1iq.js"
           wget -qO ../static/dist/umd/react.production.min.js "https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js"
