@@ -130,8 +130,8 @@ const Setting = () => {
 
   useResizeObserver(containergRef, (entry) => {
     const _height = entry.target.parentElement?.parentElement?.offsetHeight;
-    iif (_height && height !== _height - 110) {
-      setHeight(_height - 110);
+    if (_height && height !== _height - 101) {
+      setHeight(_height - 101);
     }
   });
 
