@@ -515,10 +515,7 @@ export default class CronService {
     if (logFileExist) {
       return await getFileContentByName(`${absolutePath}`);
     } else {
-      return typeof doc.status === 'number' &&
-        [CrontabStatus.queued, CrontabStatus.running].includes(doc.status)
-        ? '运行中...'
-        : '任务未运行';
+      return '任务未运行';
     }
   }
 
