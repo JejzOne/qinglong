@@ -41,6 +41,13 @@ const SystemLog = ({ height, theme }: any) => {
     });
   };
 
+  const deleteLog = () => {
+    request.delete(`${config.apiPrefix}system/log`).then((x) => {
+      message.success('删除成功');
+      refresh();
+    });
+  };
+
   return (
     <div style={{ position: 'relative' }}>
       <div>
