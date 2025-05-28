@@ -49,8 +49,8 @@ export default defineConfig({
   },
   headScripts: [
     `./api/env.js`,
-    './umd/react.production.min.js',
-    './umd/react-dom.production.min.js',
+    './react.production.min.js',
+    './react-dom.production.min.js',
   ],
   copy: [
     {
