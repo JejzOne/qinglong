@@ -275,7 +275,9 @@ export default class SubscriptionService {
       }
       for (const doc of docs) {
         const filePath = join(config.scriptPath, doc.alias);
+        const repoPath = join(config.repoPath, doc.alias);
         await rmPath(filePath);
+        await rmPath(repoPath);
       }
     }
   }
