@@ -120,7 +120,7 @@ run_concurrent() {
   [[ ! -z $cookieStr ]] && export "${env_param}=${cookieStr}"
 
   env_str_to_array
-  mtime_format="%Y-%m-%d-%H-%M-%S"
+  mtime_format="%Y-%m-%d-%H-%M-%S.%3N"
   time=$(date "+$mtime_format")
   single_log_time=$(format_log_time "$mtime_format" "$time")
 
