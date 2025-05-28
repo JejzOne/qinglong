@@ -10,6 +10,7 @@ export function runCron(cmd: string, options?: { schedule: string; extraSchedule
           ...options,
           command: cmd,
         })}`,
+      );
       const cp = spawn(cmd, { shell: '/bin/bash' });
 
       cp.stderr.on('data', (data) => {
