@@ -3,6 +3,7 @@ import winston from 'winston';
 import config from '../config';
 import {
   Subscription,
+  SubscriptionInstance,
   SubscriptionModel,
   SubscriptionStatus,
 } from '../data/subscription';
@@ -40,7 +41,10 @@ export default class SubscriptionService {
     private crontabService: CrontabService,
   ) {}
 
-  public async list(searchText?: string): Promise<Subscription[]> {
+  public async list(
+    searchText?: string,
+    ids?: string,
+  ): Promise<SubscriptionInstance[]> {
     let query = {};
     if (searchText) {
       const reg = {
@@ -202,12 +206,12 @@ export default class SubscriptionService {
   public async create(payload: Subscription): Promise<Subscription> {
     const tab = new Subscription(payload);
     const doc = await this.insert(tab);
-    await this.handleTask(doc);
+    await this.handleTask(doc.get({ plain: true }));
     await this.setSshConfig();
     return doc;
   }
 
-  public async insert(payload: Subscription): Promise<Subscription> {
+  public async insert(payload: Subscription): Promise<SubscriptionInstance> {
     return await SubscriptionModel.create(payload, { returning: true });
   }
 
@@ -259,7 +263,7 @@ export default class SubscriptionService {
   public async remove(ids: number[], query: { force?: boolean }) {
     const docs = await SubscriptionModel.findAll({ where: { id: ids } });
     for (const doc of docs) {
-      await this.handleTask(doc, false);
+      await this.handleTask(doc.get({ plain: true }), false);
     }
     await SubscriptionModel.destroy({ where: { id: ids } });
     await this.setSshConfig();
@@ -334,7 +338,7 @@ export default class SubscriptionService {
     const docs = await SubscriptionModel.findAll({ where: { id: ids } });
     await this.setSshConfig();
     for (const doc of docs) {
-      await this.handleTask(doc, false);
+      await this.handleTask(doc.get({ plain: true }), false);
     }
   }
 
@@ -343,7 +347,7 @@ export default class SubscriptionService {
     const docs = await SubscriptionModel.findAll({ where: { id: ids } });
     await this.setSshConfig();
     for (const doc of docs) {
-      await this.handleTask(doc);
+      await this.handleTask(doc.get({ plain: true }));
     }
   }
 
