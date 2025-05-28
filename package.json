@@ -119,7 +119,7 @@
   },
   "devDependencies": {
     "moment": "2.30.1",
-    "@ant-design/icons": "^5.2.6",
+    "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-layout": "6.38.22",
     "@monaco-editor/react": "4.2.1",
     "@react-hook/resize-observer": "^1.2.6",
