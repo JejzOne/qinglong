@@ -59,68 +59,89 @@ export async function getNetIp(req: any) {
       ...(req.headers['x-forwarded-for'] || '').split(','),
       req.ip,
       ...req.ips,
-      req.socket.remoteAddress,
-    ]),
-  ].filter(Boolean);
+      req.socket?.remoteAddress,
+    ].filter(Boolean)),
+  ];
 
-  let ip = ipArray[0];
+  let publicIp = '';
+  let lanIp = '';
 
-  if (ipArray.length > 1) {
-    for (let i = 0; i < ipArray.length; i++) {
-      const ipNumArray = ipArray[i].split('.');
-      const tmp = ipNumArray[0] + '.' + ipNumArray[1];
-      if (
-        tmp === '192.168' ||
-        (ipNumArray[0] === '172' &&
-          ipNumArray[1] >= 16 &&
-          ipNumArray[1] <= 32) ||
-        tmp === '10.7' ||
-        tmp === '127.0'
-      ) {
-        continue;
-      }
-      ip = ipArray[i];
-      break;
+  // 判断是否为内网IP
+  function isLan(ip: string) {
+    if (!ip) return false;
+    const ipNumArray = ip.split('.');
+    if (ip.startsWith('127.')) return true;
+    if (ip.startsWith('10.')) return true;
+    if (ip.startsWith('192.168.')) return true;
+    if (
+      ipNumArray[0] === '172' &&
+      Number(ipNumArray[1]) >= 16 &&
+      Number(ipNumArray[1]) <= 31
+    ) {
+      return true;
     }
+    return false;
   }
 
-  ip = ip.substr(ip.lastIndexOf(':') + 1, ip.length);
-  if (ip.includes('127.0') || ip.includes('192.168') || ip.includes('10.7')) {
-    ip = '';
+  // 处理ip去除端口、ipv6前缀
+  function cleanIp(ip: string) {
+    if (!ip) return '';
+    // 处理 ::ffff:192.168.0.1 这种格式
+    if (ip.includes(':')) {
+      ip = ip.substring(ip.lastIndexOf(':') + 1);
+    }
+    return ip;
   }
 
-  if (!ip) {
-    return { address: `获取失败`, ip };
+  for (let i = 0; i < ipArray.length; i++) {
+    const ip = cleanIp(ipArray[i]);
+    if (!ip) continue;
+    if (!isLan(ip) && !publicIp) {
+      publicIp = ip;
+    }
+    if (isLan(ip) && !lanIp) {
+      lanIp = ip;
+    }
+    if (publicIp && lanIp) break;
+  }
+
+  let finalIp = publicIp || lanIp || '';
+
+  if (!finalIp) {
+    return { address: `获取失败`, ip: '' };
+  }
+
+  // 仅公网IP做地理查询，内网直接返回
+  if (isLan(finalIp)) {
+    return { address: `局域网IP`, ip: finalIp };
   }
 
   try {
-    const csdnApi = got
-      .get(`https://searchplugin.csdn.net/api/v1/ip/get?ip=${ip}`, {
-        timeout: 10000,
-        retry: 0,
-      })
+    const cipApi = got
+      .get(`https://www.cip.cc/${finalIp}`, { timeout: 10000, retry: 0 })
       .text();
-    const pconlineApi = got
-      .get(`https://whois.pconline.com.cn/ipJson.jsp?ip=${ip}&json=true`, {
+    const ipApi = got
+      .get(`https://whois.pconline.com.cn/ipJson.jsp?ip=${finalIp}&json=true`, {
         timeout: 10000,
         retry: 0,
       })
       .buffer();
-    const [csdnBody, pconlineBody] = await await Promise.all<any>([
-      csdnApi,
-      pconlineApi,
-    ]);
-    const csdnRes = JSON.parse(csdnBody);
-    const pconlineRes = JSON.parse(iconv.decode(pconlineBody, 'GBK'));
-    let address = '';
-    if (csdnBody && csdnRes.code == 200) {
-      address = csdnRes.data.address;
-    } else if (pconlineRes && pconlineRes.addr) {
-      address = pconlineRes.addr;
+    const [data, ipApiBody] = await await Promise.all<any>([cipApi, ipApi]);
+
+    const ipRegx = /.*IP	:(.*)\n/;
+    const addrRegx = /.*数据二	:(.*)\n/;
+    if (data && ipRegx.test(data) && addrRegx.test(data)) {
+      const ip = data.match(ipRegx)[1];
+      const addr = data.match(addrRegx)[1];
+      return { address: addr, ip };
+    } else if (ipApiBody) {
+      const { addr, ip } = JSON.parse(iconv.decode(ipApiBody, 'GBK'));
+      return { address: `${addr}`, ip };
+    } else {
+      return { address: `获取失败`, ip: finalIp };
     }
-    return { address, ip };
   } catch (error) {
-    return { address: `获取失败`, ip };
+    return { address: `获取失败`, ip: finalIp };
   }
 }
 
