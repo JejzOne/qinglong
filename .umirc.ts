@@ -13,7 +13,7 @@ export default defineConfig({
   },
   outputPath: 'static/dist',
   fastRefresh: true,
-  favicons: [`https://qn.whyour.cn/favicon.svg`],
+  favicons: [`./favicon.svg`],
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
   proxy: {
     [`${baseUrl}api/update`]: {
@@ -49,8 +49,8 @@ export default defineConfig({
   },
   headScripts: [
     `./api/env.js`,
-    'https://gw.alipayobjects.com/os/lib/react/18.2.0/umd/react.production.min.js',
-    'https://gw.alipayobjects.com/os/lib/react-dom/18.2.0/umd/react-dom.production.min.js',
+    './umd/react.production.min.js',
+    './umd/react-dom.production.min.js',
   ],
   copy: [
     {
@@ -58,4 +58,5 @@ export default defineConfig({
       to: 'static/dist/monaco-editor/min/vs',
     },
   ],
+  npmClient: 'pnpm',
 });
