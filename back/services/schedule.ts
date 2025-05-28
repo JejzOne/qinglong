@@ -77,11 +77,6 @@ export default class ScheduleService {
           });
 
           cp.stderr.on('data', async (data) => {
-            this.logger.info(
-              '[panel][执行任务失败] 命令: %s, 错误信息: %j',
-              command,
-              data.toString(),
-            );
             await callbacks.onError?.(data.toString());
           });
 
