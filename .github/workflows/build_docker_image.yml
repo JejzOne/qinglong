@@ -46,8 +46,9 @@ jobs:
           git config --local user.email 'github-actions[bot]@users.noreply.github.com'
           git commit --allow-empty -m "copy static at $(date +'%Y-%m-%d %H:%M:%S')"
           git push --force --quiet "https://${{ secrets.API_TOKEN }}@github.com/Jejz168/qinglong-static.git" ${GITHUB_BRANCH}:${GITHUB_BRANCH}
-
-  build:
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////
+  build2165:
+    if: ${{ github.ref_name == 'debian' }}
     needs: build-static
 
     # 由于 ubuntu-latest 中使用 linux6.x 内核 linux/s390x npm 无法使用
