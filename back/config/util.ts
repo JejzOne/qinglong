@@ -111,7 +111,7 @@ export async function getNetIp(req: any) {
 
   // 仅公网IP做地理查询，内网直接返回
   if (isLan(finalIp)) {
-    return { address: `局域网IP`, ip: finalIp };
+    return { address: `内网IP`, ip: finalIp };
   }
 
   try {
