@@ -476,7 +476,7 @@ export async function getUniqPath(
     suffix = `_${id}`;
   }
 
-  const items = command.split(/ +/);
+  let items = command.split(/ +/);
   
   const maxTimeCommandIndex = items.findIndex((x) => x === '-m');
   if (maxTimeCommandIndex !== -1) {
