@@ -433,11 +433,6 @@ export default class CronService {
           fs.appendFileSync(absolutePath, data.toString());
         });
         cp.stderr.on('data', (data) => {
-          this.logger.info(
-            '[panel][执行任务失败] 命令: %s, 错误信息: %j',
-            command,
-            data.toString(),
-          );
           fs.appendFileSync(absolutePath, data.toString());
         });
         cp.on('error', (err) => {
