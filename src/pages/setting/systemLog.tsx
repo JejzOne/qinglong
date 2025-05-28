@@ -1,3 +1,4 @@
+import intl from 'react-intl-universal';
 import React, { useRef, useState } from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { Button, DatePicker, Empty, message, Spin } from 'antd';
@@ -83,7 +84,7 @@ const SystemLog = ({ height, theme }: any) => {
             deleteLog();
           }}
         >
-          清空日志
+          {intl.get('清空日志')}
         </Button>
       </div>
       {systemLogData ? (
