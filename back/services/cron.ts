@@ -190,16 +190,24 @@ export default class CronService {
             ];
             break;
           case 'Nin':
-            q[Op.and] = [
-              {
-                [property]: {
-                  [Op.notIn]: Array.isArray(value) ? value : [value],
+            if (
+              property === 'status' &&
+              !value.includes(CrontabStatus.disabled)
+            ) {
+              q[Op.and] = [
+                { [property]: Array.isArray(value) ? value : [value] },
+                { isDisabled: 0 },
+              ];
+            } else {
+              q[Op.or] = [
+                {
+                  [property]: Array.isArray(value) ? value : [value],
                 },
-              },
-              property === 'status' && value.includes(2)
-                ? { isDisabled: { [Op.ne]: 1 } }
-                : {},
-            ];
+              property === 'status' && value.includes(CrontabStatus.disabled)
+                  ? { isDisabled: 1 }
+                  : {},
+              ];
+            }
             break;
           default:
             break;
