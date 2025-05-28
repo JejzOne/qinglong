@@ -9,14 +9,13 @@
 }
 
 body {
-  position: static;
-  overflow: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: auto;
 }
 
 #root {
-  height: 100vh;
-  height: calc(100vh - var(--vh-offset, 0px));
-  -webkit-overflow-scrolling: touch;
+  height: auto;
+  min-height: 100vh;
 }
 
 .ant-modal-header {
