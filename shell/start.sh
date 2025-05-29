@@ -46,8 +46,8 @@ if [[ $os_name == 'alpine' ]]; then
     procps \
     netcat-openbsd
 elif [[ $os_name == 'debian' ]] || [[ $os_name == 'ubuntu' ]]; then
-  apt update
-  apt install -y git curl wget tzdata perl openssl jq nginx procps netcat openssh-client
+  apt-get update
+  apt-get install -y git curl wget tzdata perl openssl jq nginx procps netcat openssh-client
 elif [[ $os_name == 'centos' ]]; then
   yum update
   yum install -y epel-release git curl wget tzdata perl openssl jq nginx procps netcat openssh-client
