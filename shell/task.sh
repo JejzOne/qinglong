@@ -26,6 +26,8 @@ define_program() {
     else
       which_program="tsx"
     fi
+  else
+    which_program=""
   fi
 }
 
