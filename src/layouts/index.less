@@ -9,19 +9,12 @@
 }
 
 body {
-  // 禁止手机页面下拉刷新
-  overflow: hidden;
-
-  // 禁止手机页面弹簧效果
-  position: fixed;
-  top: 0;
-  left: 0;
+  overflow-y: auto;
+  position: static;
 }
 
 #root {
-  height: 100vh;
-  height: calc(100vh - var(--vh-offset, 0px));
-  -webkit-overflow-scrolling: touch;
+  min-height: 150vh;
 }
 
 .ant-modal-header {
