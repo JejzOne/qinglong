@@ -9,14 +9,20 @@
 }
 
 body {
-  overflow-y: auto;
-  position: static;
+  // 禁止手机页面下拉刷新
+  overflow: hidden;
+
+  // 禁止手机页面弹簧效果
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #root {
-  min-height: 150vh;
+  height: 100vh;
+  height: calc(100vh - var(--vh-offset, 0px));
+  -webkit-overflow-scrolling: touch;
 }
-
 .ant-modal-header {
   padding-right: 54px;
 }
@@ -52,10 +58,7 @@ body {
     white-space: break-spaces;
     line-height: 17px;
     margin-bottom: 0;
-    overflow: auto;
-    user-select: text;
-    -webkit-user-select: text;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
   }
 }
 
