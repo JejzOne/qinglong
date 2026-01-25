@@ -14,7 +14,7 @@ RUN set -x && \
 
 FROM python:3.10-slim-bookworm
 
-ARG QL_MAINTAINER="Jejz168"
+ARG QL_MAINTAINER="JejzOne"
 LABEL maintainer="${QL_MAINTAINER}"
 ARG QL_URL=https://github.com/${QL_MAINTAINER}/qinglong.git
 ARG QL_BRANCH=debian
