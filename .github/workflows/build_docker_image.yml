@@ -26,7 +26,7 @@ jobs:
 
       - name: copy to static repo
         env:
-          GITHUB_REPO: github.com/Jejz168/qinglong-static
+          GITHUB_REPO: github.com/JejzOne/qinglong-static
           GITHUB_BRANCH: ${{ github.ref_name }}
         run: |
           mkdir -p tmp
@@ -43,7 +43,7 @@ jobs:
           git config --local user.name 'github-actions[bot]'
           git config --local user.email 'github-actions[bot]@users.noreply.github.com'
           git commit --allow-empty -m "copy static at $(date +'%Y-%m-%d %H:%M:%S')"
-          git push --force --quiet "https://${{ secrets.API_TOKEN }}@github.com/Jejz168/qinglong-static.git" ${GITHUB_BRANCH}:${GITHUB_BRANCH}
+          git push --force --quiet "https://${{ secrets.API_TOKEN }}@github.com/JejzOne/qinglong-static.git" ${GITHUB_BRANCH}:${GITHUB_BRANCH}
 
   build:
     needs: build-static
