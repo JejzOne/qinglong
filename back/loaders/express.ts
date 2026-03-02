@@ -17,8 +17,29 @@ import { serveEnv } from '../config/serverEnv';
 import Logger from './logger';
 
 export default ({ app }: { app: Application }) => {
+  // Security: Enable strict routing to prevent case-insensitive path bypass
+  app.set('case sensitive routing', true);
+  app.set('strict routing', true);
   app.set('trust proxy', 'loopback');
   app.use(cors());
+
+  // Security: Path normalization middleware to prevent case variation attacks
+  app.use((req, res, next) => {
+    const originalPath = req.path;
+    const normalizedPath = originalPath.toLowerCase();
+    
+    // Block requests with case variations on protected paths
+    if (originalPath !== normalizedPath && 
+        (normalizedPath.startsWith('/api/') || normalizedPath.startsWith('/open/'))) {
+      return res.status(400).json({
+        code: 400,
+        message: 'Invalid path format'
+      });
+    }
+    
+    next();
+  });
+
   app.get(`${config.api.prefix}/env.js`, serveEnv);
   app.use(`${config.api.prefix}/static`, express.static(config.uploadPath));
 
@@ -40,7 +61,7 @@ export default ({ app }: { app: Application }) => {
       secret: config.secret,
       algorithms: ['HS384'],
     }).unless({
-      path: [...config.apiWhiteList, /^\/open\//],
+      path: [...config.apiWhiteList, /^(\/(?!api\/).*)$/i],
     }),
   );
 
@@ -99,7 +120,14 @@ export default ({ app }: { app: Application }) => {
   });
 
   app.use(async (req, res, next) => {
-    if (!['/api/user/init', '/api/user/notification/init'].includes(req.path)) {
+    if (
+      ![
+        '/api/user/init',
+        '/api/user/notification/init',
+        '/open/user/init',
+        '/open/user/notification/init',
+      ].includes(req.path)
+    ) {
       return next();
     }
     const userService = Container.get(UserService);
