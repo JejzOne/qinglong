@@ -22,24 +22,6 @@ export default ({ app }: { app: Application }) => {
   app.set('strict routing', true);
   app.set('trust proxy', 'loopback');
   app.use(cors());
-
-  // Security: Path normalization middleware to prevent case variation attacks
-  app.use((req, res, next) => {
-    const originalPath = req.path;
-    const normalizedPath = originalPath.toLowerCase();
-    
-    // Block requests with case variations on protected paths
-    if (originalPath !== normalizedPath && 
-        (normalizedPath.startsWith('/api/') || normalizedPath.startsWith('/open/'))) {
-      return res.status(400).json({
-        code: 400,
-        message: 'Invalid path format'
-      });
-    }
-    
-    next();
-  });
-
   app.get(`${config.api.prefix}/env.js`, serveEnv);
   app.use(`${config.api.prefix}/static`, express.static(config.uploadPath));
 
@@ -76,6 +58,11 @@ export default ({ app }: { app: Application }) => {
   });
 
   app.use(async (req, res, next) => {
+    const pathLower = req.path.toLowerCase();
+    if (!['/open/', '/api/'].some((x) => pathLower.startsWith(x))) {
+      return next();
+    }
+    
     const headerToken = getToken(req);
     if (req.path.startsWith('/open/')) {
       const openService = Container.get(OpenService);
