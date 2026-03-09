@@ -1,6 +1,6 @@
 import intl from 'react-intl-universal';
 import { LANG_MAP, LOG_END_SYMBOL } from './const';
-import cron_parser from 'cron-parser';
+import CronExpressionParser from 'cron-parser';
 
 export default function browserType() {
   // 权重：系统 + 系统版本 > 平台 > 内核 + 载体 + 内核版本 + 载体版本 > 外壳 + 外壳版本
@@ -331,7 +331,7 @@ export function getCommandScript(
 
 export function parseCrontab(schedule: string): Date | null {
   try {
-    const time = cron_parser.parseExpression(schedule);
+    const time = CronExpressionParser.parse(schedule);
     if (time) {
       return time.next().toDate();
     }
