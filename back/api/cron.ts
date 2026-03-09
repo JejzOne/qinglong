@@ -4,7 +4,7 @@ import { Logger } from 'winston';
 import CronService from '../services/cron';
 import CronViewService from '../services/cronView';
 import { celebrate, Joi } from 'celebrate';
-import cron_parser from 'cron-parser';
+import CronExpressionParser from 'cron-parser';
 const route = Router();
 
 export default (app: Router) => {
@@ -184,7 +184,7 @@ export default (app: Router) => {
     async (req: Request, res: Response, next: NextFunction) => {
       const logger: Logger = Container.get('logger');
       try {
-        if (cron_parser.parseExpression(req.body.schedule).hasNext()) {
+        if (CronExpressionParser.parse(req.body.schedule).hasNext()) {
           const cronService = Container.get(CronService);
           const data = await cronService.create(req.body);
           return res.send({ code: 200, data });
@@ -347,7 +347,7 @@ export default (app: Router) => {
       try {
         if (
           !req.body.schedule ||
-          cron_parser.parseExpression(req.body.schedule).hasNext()
+          CronExpressionParser.parse(req.body.schedule).hasNext()
         ) {
           const cronService = Container.get(CronService);
           const data = await cronService.update(req.body);
