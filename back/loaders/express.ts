@@ -64,12 +64,12 @@ export default ({ app }: { app: Application }) => {
     }
     
     const headerToken = getToken(req);
-    if (req.path.startsWith('/open/')) {
+    if (pathLower.startsWith('/open/')) {
       const openService = Container.get(OpenService);
       const doc = await openService.findTokenByValue(headerToken);
       if (doc && doc.tokens && doc.tokens.length > 0) {
         const currentToken = doc.tokens.find((x) => x.value === headerToken);
-        const keyMatch = req.path.match(/\/open\/([a-z]+)\/*/);
+        const keyMatch = pathLower.match(/\/open\/([a-z]+)\/*/);
         const key = keyMatch && keyMatch[1];
         if (
           doc.scopes.includes(key as any) &&
@@ -107,13 +107,14 @@ export default ({ app }: { app: Application }) => {
   });
 
   app.use(async (req, res, next) => {
+    const pathLower = req.path.toLowerCase();
     if (
       ![
         '/api/user/init',
         '/api/user/notification/init',
         '/open/user/init',
         '/open/user/notification/init',
-      ].includes(req.path)
+      ].includes(pathLower)
     ) {
       return next();
     }
