@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, message, Input, Form, Button, Space } from 'antd';
 import { request } from '@/utils/http';
 import config from '@/utils/config';
-import cronParse from 'cron-parser';
+import CronExpressionParser from 'cron-parser';
 import EditableTagGroup from '@/components/tag';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
@@ -101,7 +101,7 @@ const CronModal = ({
             { required: true },
             {
               validator: (rule, value) => {
-                if (!value || cronParse.parseExpression(value).hasNext()) {
+                if (!value || CronExpressionParser.parse(value).hasNext()) {
                   return Promise.resolve();
                 } else {
                   return Promise.reject(intl.get('Cron表达式格式有误'));
