@@ -71,6 +71,9 @@
         "react-dom": "18",
         "dva-core": "2"
       }
+    },
+    "overrides": {
+      "sqlite3": "git+https://github.com/whyour/node-sqlite3.git#v1.0.3"
     }
   },
   "dependencies": {
