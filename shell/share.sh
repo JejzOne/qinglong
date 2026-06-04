@@ -469,7 +469,9 @@ handle_task_end() {
   local end_time=$(format_time "$time_format" "$etime")
   local end_timestamp=$(format_timestamp "$time_format" "$etime")
   local diff_time=$(($end_timestamp - $begin_timestamp))
-  local exit_code="${@: -1}"
+  local suffix=""
+  [[ "${MANUAL:=}" == "true" ]] && suffix="(手动停止)"
+  
   [[ "$diff_time" == 0 ]] && diff_time=1
 
   if [[ $ID ]]; then
@@ -479,13 +481,7 @@ handle_task_end() {
     fi
   fi
 
-  if [[ "${MANUAL:=}" == "true" ]]; then
-    echo -e "\n## 执行已停止 ⏹... $end_time  耗时 $diff_time 秒${error_message:=}　　　　　"
-  elif [[ $exit_code -eq 0 ]]; then
-    echo -e "\n## 执行完成 ✅... $end_time  耗时 $diff_time 秒${error_message:=}　　　　　"
-  else
-    echo -e "\n## 执行失败 ❌ (退出码 ${exit_code})... $end_time  耗时 $diff_time 秒${error_message:=}　　　　　"
-  fi
+  echo -e "\n## 执行结束$suffix... $end_time  耗时 $diff_time 秒${error_message:=}　　　　　"
 }
 
 init_env
