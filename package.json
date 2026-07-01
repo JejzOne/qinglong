@@ -121,7 +121,6 @@
     "ip2region": "2.3.0"
   },
   "devDependencies": {
-    "moment": "2.30.1",
     "@ant-design/icons": "^5.0.1",
     "@ant-design/icons-svg": "^4.4.2",
     "@ant-design/pro-layout": "6.38.22",
@@ -164,6 +163,7 @@
     "react-hotkeys-hook": "^4.6.1",
     "file-saver": "2.0.2",
     "lint-staged": "^13.0.3",
+    "moment": "2.30.1",
     "monaco-editor": "0.33.0",
     "nodemon": "^3.0.1",
     "prettier": "^2.5.1",
