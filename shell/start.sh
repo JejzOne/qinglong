@@ -56,7 +56,7 @@ else
   exit 1
 fi
 
-npm install -g pnpm@8.3.1 pm2 tsx
+npm install -g pnpm@8.3.1 pm2 tsx ts-node typescript@5
 
 cd ${QL_DIR}
 cp -f .env.example .env
