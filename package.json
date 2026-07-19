@@ -71,7 +71,7 @@
       }
     },
     "overrides": {
-      "sqlite3": "git+https://github.com/whyour/node-sqlite3.git#v1.0.3"
+      "sqlite3": "git+https://github.com/whyour/node-sqlite3.git#v1.1.0"
     }
   },
   "dependencies": {
