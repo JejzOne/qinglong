@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 overrides:
-  sqlite3: git+https://github.com/whyour/node-sqlite3.git#v1.1.0
+  sqlite3: npm:@whyour/sqlite3@1.1.0
 
 dependencies:
   '@grpc/grpc-js':
@@ -110,8 +110,8 @@ dependencies:
     specifier: ^0.3.24
     version: 0.3.24
   sqlite3:
-    specifier: git+https://github.com/whyour/node-sqlite3.git#v1.1.0
-    version: github.com/whyour/node-sqlite3/4d29681eee3557890502d3859ec0fd6b6d13ccce
+    specifier: npm:@whyour/sqlite3@1.1.0
+    version: /@whyour/sqlite3@1.1.0
   toad-scheduler:
     specifier: ^3.0.1
     version: 3.0.1
@@ -6254,6 +6254,23 @@ packages:
       '@webassemblyjs/ast': 1.11.6
       '@xtuc/long': 4.2.2
     dev: true
+
+  /@whyour/sqlite3@1.1.0:
+    resolution: {integrity: sha512-5g9xsjkv9sUepCvBBKmev6JSKSKjp0ebpW25uSsuV5kurIYrd7AnkbffNMNIswxwsQJSLPewVEX5ROsQfETfnA==}
+    requiresBuild: true
+    peerDependenciesMeta:
+      node-gyp:
+        optional: true
+    dependencies:
+      '@mapbox/node-pre-gyp': 1.0.11
+      node-addon-api: 4.3.0
+      tar: 6.1.15
+    optionalDependencies:
+      node-gyp: 12.4.0
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+    dev: false
 
   /@xtuc/ieee754@1.2.0:
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -14564,7 +14581,7 @@ packages:
       retry-as-promised: 7.0.4
       semver: 7.5.4
       sequelize-pool: 7.1.0
-      sqlite3: github.com/whyour/node-sqlite3/4d29681eee3557890502d3859ec0fd6b6d13ccce
+      sqlite3: /@whyour/sqlite3@1.1.0
       toposort-class: 1.0.1
       uuid: 8.3.2
       validator: 13.9.0
@@ -16510,25 +16527,6 @@ packages:
       normalize-path: 1.0.0
       strip-indent: 2.0.0
     dev: true
-
-  github.com/whyour/node-sqlite3/4d29681eee3557890502d3859ec0fd6b6d13ccce:
-    resolution: {tarball: https://codeload.github.com/whyour/node-sqlite3/tar.gz/4d29681eee3557890502d3859ec0fd6b6d13ccce}
-    name: '@whyour/sqlite3'
-    version: 1.1.0
-    requiresBuild: true
-    peerDependenciesMeta:
-      node-gyp:
-        optional: true
-    dependencies:
-      '@mapbox/node-pre-gyp': 1.0.11
-      node-addon-api: 4.3.0
-      tar: 6.1.15
-    optionalDependencies:
-      node-gyp: 12.4.0
-    transitivePeerDependencies:
-      - encoding
-      - supports-color
-    dev: false
 
 settings:
   autoInstallPeers: true
