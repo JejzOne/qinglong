@@ -130,6 +130,7 @@ jobs:
           sbom: true
           tags: |
             jejz/ql:debian-2.17.6
+            jejz/ql:latest
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
