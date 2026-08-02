@@ -124,9 +124,10 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
+          provenance: mode=max
+          sbom: true
           tags: |
             jejz/ql:debian-2.16.5
-            jejz/ql:latest
       
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
