@@ -126,6 +126,8 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
+          provenance: mode=max
+          sbom: true
           tags: |
             jejz/ql:debian-2.17.6
       
