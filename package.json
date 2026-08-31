@@ -71,7 +71,7 @@
       }
     },
     "overrides": {
-      "sqlite3": "npm:@whyour/sqlite3@1.1.0"
+      "sqlite3": "npm:@whyour/sqlite3@1.1.2"
     }
   },
   "dependencies": {
@@ -108,7 +108,7 @@
     "sequelize": "^6.37.5",
     "serve-handler": "^6.1.6",
     "sockjs": "^0.3.24",
-    "sqlite3": "git+https://github.com/whyour/node-sqlite3.git#v1.0.3",
+    "sqlite3": "npm:@whyour/sqlite3@1.1.2",
     "tar": "^6.1.15",
     "toad-scheduler": "^3.0.1",
     "typedi": "^0.10.0",
