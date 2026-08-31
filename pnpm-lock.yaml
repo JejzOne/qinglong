@@ -1,7 +1,7 @@
 lockfileVersion: '6.0'
 
 overrides:
-  sqlite3: npm:@whyour/sqlite3@1.1.0
+  sqlite3: npm:@whyour/sqlite3@1.1.2
 
 dependencies:
   '@grpc/grpc-js':
@@ -96,7 +96,7 @@ dependencies:
     version: 0.2.2
   sequelize:
     specifier: ^6.37.5
-    version: 6.37.5(@whyour/sqlite3@1.1.0)
+    version: 6.37.5(@whyour/sqlite3@1.1.2)
   serve-handler:
     specifier: ^6.1.6
     version: 6.1.6
@@ -104,8 +104,8 @@ dependencies:
     specifier: ^0.3.24
     version: 0.3.24
   sqlite3:
-    specifier: npm:@whyour/sqlite3@1.1.0
-    version: /@whyour/sqlite3@1.1.0
+    specifier: npm:@whyour/sqlite3@1.1.2
+    version: /@whyour/sqlite3@1.1.2
   tar:
     specifier: ^6.1.15
     version: 6.1.15
@@ -6062,8 +6062,8 @@ packages:
       '@xtuc/long': 4.2.2
     dev: true
 
-  /@whyour/sqlite3@1.1.0:
-    resolution: {integrity: sha512-5g9xsjkv9sUepCvBBKmev6JSKSKjp0ebpW25uSsuV5kurIYrd7AnkbffNMNIswxwsQJSLPewVEX5ROsQfETfnA==}
+  /@whyour/sqlite3@1.1.2:
+    resolution: {integrity: sha512-OY24/OJMqLHIGolo4GCFW4lrJKAoOB+ZqERXb7u7DKZQz7QR3f0GALE99BZWQBSZEVVZ/StVeAb2fCkMfTtuDQ==}
     requiresBuild: true
     peerDependenciesMeta:
       node-gyp:
@@ -14468,7 +14468,7 @@ packages:
     engines: {node: '>= 10.0.0'}
     dev: false
 
-  /sequelize@6.37.5(@whyour/sqlite3@1.1.0):
+  /sequelize@6.37.5(@whyour/sqlite3@1.1.2):
     resolution: {integrity: sha512-10WA4poUb3XWnUROThqL2Apq9C2NhyV1xHPMZuybNMCucDsbbFuKg51jhmyvvAUyUqCiimwTZamc3AHhMoBr2Q==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -14513,7 +14513,7 @@ packages:
       retry-as-promised: 7.0.4
       semver: 7.7.2
       sequelize-pool: 7.1.0
-      sqlite3: /@whyour/sqlite3@1.1.0
+      sqlite3: /@whyour/sqlite3@1.1.2
       toposort-class: 1.0.1
       uuid: 8.3.2
       validator: 13.9.0
