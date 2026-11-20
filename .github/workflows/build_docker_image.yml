@@ -24,6 +24,7 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm build:front
           pnpm build:back
+          pnpm build:info
 
       - name: copy to static repo
         env:
